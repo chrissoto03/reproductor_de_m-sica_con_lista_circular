@@ -47,6 +47,3 @@ class ListaCircularDoble:
             resultado.append(nodo.cancion)
             nodo = nodo.siguiente
         return resultado
-
-    def eliminar(self, cancion):  # Persona B
-        pass
