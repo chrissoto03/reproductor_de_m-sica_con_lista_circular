@@ -13,7 +13,6 @@ class ListaCircularDoble:
         nuevo = Nodo(cancion)
 
         if self.esta_vacia():
-            # Caso 1: lista vacía. El nodo se apunta a sí mismo en ambos sentidos
             nuevo.siguiente = nuevo
             nuevo.anterior = nuevo
             self.actual = nuevo
@@ -47,3 +46,26 @@ class ListaCircularDoble:
             resultado.append(nodo.cancion)
             nodo = nodo.siguiente
         return resultado
+
+    def eliminar(self, cancion):
+        if self.esta_vacia():
+            return False
+
+        nodo = self.actual
+        for _ in range(self.tamano):
+            if nodo.cancion == cancion:
+                break
+            nodo = nodo.siguiente
+        else:
+            return False
+        
+        if self.tamano == 1:
+            self.actual = None
+        else:
+            nodo.anterior.siguiente = nodo.siguiente
+            nodo.siguiente.anterior = nodo.anterior
+            if nodo is self.actual:
+                self.actual = nodo.siguiente
+
+        self.tamano -= 1
+        return True
