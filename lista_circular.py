@@ -3,23 +3,50 @@ from nodo import Nodo
 
 class ListaCircularDoble:
     def __init__(self):
-        self.actual = None   # nodo de la canción que "está sonando"
-        self.tamano = 0      # cuántas canciones hay
+        self.actual = None  # nodo de la canción que "está sonando"
+        self.tamano = 0  # cuántas canciones hay
 
     def esta_vacia(self):
         return self.actual is None
 
-    def agregar(self, cancion):         # Persona A
-        pass
+    def agregar(self, cancion):
+        nuevo = Nodo(cancion)
 
-    def siguiente(self):                # Persona A
-        pass
+        if self.esta_vacia():
+            # Caso 1: lista vacía. El nodo se apunta a sí mismo en ambos sentidos
+            nuevo.siguiente = nuevo
+            nuevo.anterior = nuevo
+            self.actual = nuevo
+        else:
+            ultimo = self.actual.anterior
 
-    def anterior(self):                 # Persona A
-        pass
+            ultimo.siguiente = nuevo  # la última ahora apunta al nuevo
+            nuevo.anterior = ultimo  # el nuevo mira hacia atrás a la última
+            nuevo.siguiente = self.actual  # el nuevo cierra el círculo hacia la actual
+            self.actual.anterior = nuevo  # la actual ahora mira atrás al nuevo
 
-    def a_lista(self):                  # Persona A
-        pass
+        self.tamano += 1
 
-    def eliminar(self, cancion):        # Persona B
+    def siguiente(self):
+        if self.esta_vacia():
+            return
+        self.actual = self.actual.siguiente
+
+    def anterior(self):
+        if self.esta_vacia():
+            return
+        self.actual = self.actual.anterior
+
+    def a_lista(self):
+        if self.esta_vacia():
+            return []
+
+        resultado = []
+        nodo = self.actual
+        for _ in range(self.tamano):
+            resultado.append(nodo.cancion)
+            nodo = nodo.siguiente
+        return resultado
+
+    def eliminar(self, cancion):  # Persona B
         pass
